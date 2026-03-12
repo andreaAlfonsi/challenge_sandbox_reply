@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 
 from langfuse_utils import run_llm_call, generate_session_id, create_langfuse_client
+from langchain_core.messages import HumanMessage
 
 # Load environment variables from .env file
 load_dotenv()
@@ -37,10 +38,10 @@ session_id = generate_session_id()
 print(f"Session ID: {session_id}\n")
 
 langfuse_client = create_langfuse_client()
-response = run_llm_call(langfuse_client, session_id, model, "What is the square root of 144?")
+response = run_llm_call(langfuse_client, session_id, model, [HumanMessage(content="What is the square root of 144?")])
 
 print(f"\nInput:    What is the square root of 144?")
-print(f"Response: {response}")
+print(f"Response: {response.content}")
 
 langfuse_client.flush()
 

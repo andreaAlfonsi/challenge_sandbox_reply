@@ -21,9 +21,8 @@ def generate_session_id():
 
 def invoke_langchain(model, prompt, langfuse_handler):
     """Invoke LangChain with the given prompt and Langfuse handler."""
-    messages = [HumanMessage(content=prompt)]
-    response = model.invoke(messages, config={"callbacks": [langfuse_handler]})
-    return response.content
+    response = model.invoke(prompt, config={"callbacks": [langfuse_handler]})
+    return response
 
 @observe()
 def run_llm_call(langfuse_client, session_id, model, prompt):
